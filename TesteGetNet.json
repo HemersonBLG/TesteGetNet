@@ -1,0 +1,749 @@
+{
+	"info": {
+		"_postman_id": "7a5f26db-4edf-4d0d-988b-9e00c90997b7",
+		"name": "Requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2074820"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Status200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 - Usuários encontrados com sucesso!\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"const schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"page\": {\"type\": \"number\"},\r",
+									"        \"per_page\": {\"type\": \"number\"},\r",
+									"        \"total\": {\"type\": \"number\"},\r",
+									"        \"total_pages\": {\"type\": \"number\"},\r",
+									"        \"data\": {\"type\": \"array\"},\r",
+									"        \"support\": {\"type\": \"object\"},\r",
+									"    },\r",
+									"    \"required\": [\"page\", \"per_page\", \"total\"]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema está correto contendo os campos obrigatórios', () => {\r",
+									"    pm.response.to.have.jsonSchema(schema)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://reqres.in/api/users?page=2",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Status404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404 - Usuário não encontrado!\", () => {\r",
+									"    pm.response.to.have.status(404);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Status code is 200 - Códigio incorreto!\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://reqres.in/api/users/999",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ValidUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.test(\"Status code is 200 - Usuário encontrado com sucesso!\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"const schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"data\": {\"type\": \"object\"},\r",
+									"        \"support\": {\"type\": \"object\"}\r",
+									"    },\r",
+									"    \"required\": [\"data\", \"support\"]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema está correto contendo os campos obrigatórios', () => {\r",
+									"    pm.response.to.have.jsonSchema(schema)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando o ID\", () => {\r",
+									"    pm.expect(response.data.id).to.be.a('number')\r",
+									"    pm.expect(/^[\\d]+$/.test(response.data.id)).to.be.true\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando o email\", () => {\r",
+									"    pm.expect(response.data.email).to.be.a('string')\r",
+									"    pm.expect(/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/.test(response.data.email)).to.be.true\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando o primeiro nome\", () => {\r",
+									"    pm.expect(response.data.first_name).to.be.a('string')\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando o último nome\", () => {\r",
+									"    pm.expect(response.data.last_name).to.be.a('string')\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando o avatar\", () => {\r",
+									"    pm.expect(response.data.avatar).to.be.a('string')\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://reqres.in/api/users/2",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "CREATE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.test(\"Status code is 201 - Usuário criado com sucesso!\", () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"})\r",
+									"//tests[\"Status code is 201\"] = responseCode.code === 201\r",
+									"\r",
+									"const schemaCode = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"name\": {\"type\": \"string\"},\r",
+									"        \"job\": {\"type\": \"string\"},\r",
+									"        \"id\": {\"type\": \"string\"},\r",
+									"    },\r",
+									"    \"required\": [\"name\", \"job\", \"id\"]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema está correto contendo todos os campos obrigatórios', () => {\r",
+									"    pm.response.to.have.jsonSchema(schemaCode)\r",
+									"    pm.response.to.have.status(201)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando nome\", () => {\r",
+									"    pm.expect(response.name).to.eql(\"testeBR\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando trabalho\", () => {\r",
+									"    pm.expect(response.job).to.eql(\"tester\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando o ID\", () => {\r",
+									"    pm.expect(/^[\\d]+$/.test(response.id)).to.be.true\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"testeBR\",\r\n    \"job\": \"tester\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/users",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.test(\"Status code is 200 - Usuário alterado com sucesso!\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"const schemaCode = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"name\": {\"type\": \"string\"},\r",
+									"        \"job\": {\"type\": \"string\"},\r",
+									"        \"updatedAt\": {\"type\": \"string\"},\r",
+									"    },\r",
+									"    \"required\": [\"name\", \"job\", \"updatedAt\"]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema está correto contendo todos os campos obrigatórios', () => {\r",
+									"    pm.response.to.have.jsonSchema(schemaCode)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando nome\", () => {\r",
+									"    pm.expect(response.name).to.eql(\"Teste Alterado\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando trabalho\", () => {\r",
+									"    pm.expect(response.job).to.eql(\"Novo Servico por PUT\")\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Teste Alterado\",\r\n    \"job\": \"Novo Servico por PUT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/users/3",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.test(\"Status code is 200 - Usuário alterado com sucesso!\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"const schemaCode = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"name\": {\"type\": \"string\"},\r",
+									"        \"job\": {\"type\": \"string\"},\r",
+									"        \"updatedAt\": {\"type\": \"string\"},\r",
+									"    },\r",
+									"    \"required\": [\"name\", \"job\", \"updatedAt\"]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema está correto contendo todos os campos obrigatórios', () => {\r",
+									"    pm.response.to.have.jsonSchema(schemaCode)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando nome\", () => {\r",
+									"    pm.expect(response.name).to.eql(\"Teste Alterado\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando trabalho\", () => {\r",
+									"    pm.expect(response.job).to.eql(\"Novo Servico por PATCH\")\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Teste Alterado\",\r\n    \"job\": \"Novo Servico por PATCH\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/users/3",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTER-SUCCESSFUL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.test(\"Status code is 200 - Usuário registrado com sucesso!\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"const schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"id\": {\"type\": \"number\"},\r",
+									"        \"token\": {\"type\": \"string\"}\r",
+									"    },\r",
+									"    \"required\": [\"id\", \"token\"]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema está correto contendo todos os campos obrigatórios', () => {\r",
+									"    pm.response.to.have.jsonSchema(schema)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando o ID\", () => {\r",
+									"    pm.expect(/^[\\d]+$/.test(response.id)).to.be.true\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando a inclusão do token\", () => {\r",
+									"    pm.expect(response.token).to.be.eql(\"QpwL5tke4Pnpja7X4\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"pistol\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/register",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTER-UNSUCCESSFUL Sem Senha",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.test(\"Status code is 400 - Erro apresentado com sucesso!\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"const schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"error\": {\"type\": \"string\"}\r",
+									"    },\r",
+									"    \"required\": [\"error\"]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema está correto contendo todos os campos obrigatórios', () => {\r",
+									"    pm.response.to.have.jsonSchema(schema)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando a mensagem de error\", () => {\r",
+									"    pm.expect(response.error).to.eql(\"Missing email or username\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"teste@teste\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/register",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTER-UNSUCCESSFUL Sem Senha",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.test(\"Status code is 400 - Erro apresentado com sucesso!\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"const schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"error\": {\"type\": \"string\"}\r",
+									"    },\r",
+									"    \"required\": [\"error\"]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema está correto contendo todos os campos obrigatórios', () => {\r",
+									"    pm.response.to.have.jsonSchema(schema)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando a mensagem de error\", () => {\r",
+									"    pm.expect(response.error).to.eql(\"Missing password\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"sydney@fife\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/register",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN-SUCCESSFUL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.test(\"Status code is 200 - Login efetuado com sucesso!\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"const schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"token\": {\"type\": \"string\"}\r",
+									"    },\r",
+									"    \"required\": [\"token\"]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema está correto contendo todos os campos obrigatórios', () => {\r",
+									"    pm.response.to.have.jsonSchema(schema)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando a inclusão do token\", () => {\r",
+									"    pm.expect(response.token).to.be.eql(\"QpwL5tke4Pnpja7X4\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"pistol\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/login",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN-UNSUCCESSFUL Sem Senha",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.test(\"Status code is 400 - Teste de erro de Login!\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"const schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"error\": {\"type\": \"string\"}\r",
+									"    },\r",
+									"    \"required\": [\"error\"]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema está correto contendo os campos obrigatórios', () => {\r",
+									"    pm.response.to.have.jsonSchema(schema)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando a inclusão do token\", () => {\r",
+									"    pm.expect(response.error).to.be.eql(\"Missing password\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/login",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN-UNSUCCESSFUL Sem Senha Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.test(\"Status code is 400 - Teste de erro de Login!\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"const schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"error\": {\"type\": \"string\"}\r",
+									"    },\r",
+									"    \"required\": [\"error\"]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema está correto contendo os campos obrigatórios', () => {\r",
+									"    pm.response.to.have.jsonSchema(schema)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando a inclusão do token\", () => {\r",
+									"    pm.expect(response.error).to.be.eql(\"Missing email or username\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"pistol\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/login",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
