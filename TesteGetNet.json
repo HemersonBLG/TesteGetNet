@@ -699,8 +699,7 @@
 									"    \"properties\": {\r",
 									"        \"name\": {\"type\": \"string\"},\r",
 									"        \"job\": {\"type\": \"string\"},\r",
-									"        \"updatedAt\": {\"type\": \"number\"},\r",
-									"        \"teste\": {\"type\": \"string\"}\r",
+									"        \"updatedAt\": {\"type\": \"string\"}\r",
 									"    },\r",
 									"    \"required\": [\"name\", \"job\", \"updatedAt\"]\r",
 									"}\r",
@@ -727,7 +726,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\",\r\n    \"teste\": \"teste\"\r\n}",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
