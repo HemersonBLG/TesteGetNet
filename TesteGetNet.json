@@ -74,10 +74,6 @@
 								"exec": [
 									"pm.test(\"Status code is 404 - Usuário não encontrado!\", () => {\r",
 									"    pm.response.to.have.status(404);\r",
-									"})\r",
-									"\r",
-									"pm.test(\"Status code is 200 - Códigio incorreto!\", () => {\r",
-									"    pm.response.to.have.status(200);\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -245,140 +241,6 @@
 							"path": [
 								"api",
 								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "CREATE",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const response = pm.response.json()\r",
-									"pm.test(\"Status code is 200 - Usuário alterado com sucesso!\", () => {\r",
-									"    pm.response.to.have.status(200)\r",
-									"})\r",
-									"\r",
-									"const schemaCode = {\r",
-									"    \"type\": \"object\",\r",
-									"    \"properties\": {\r",
-									"        \"name\": {\"type\": \"string\"},\r",
-									"        \"job\": {\"type\": \"string\"},\r",
-									"        \"updatedAt\": {\"type\": \"string\"},\r",
-									"    },\r",
-									"    \"required\": [\"name\", \"job\", \"updatedAt\"]\r",
-									"}\r",
-									"\r",
-									"pm.test('Schema está correto contendo todos os campos obrigatórios', () => {\r",
-									"    pm.response.to.have.jsonSchema(schemaCode)\r",
-									"})\r",
-									"\r",
-									"pm.test(\"Validando nome\", () => {\r",
-									"    pm.expect(response.name).to.eql(\"Teste Alterado\")\r",
-									"})\r",
-									"\r",
-									"pm.test(\"Validando trabalho\", () => {\r",
-									"    pm.expect(response.job).to.eql(\"Novo Servico por PUT\")\r",
-									"})\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Teste Alterado\",\r\n    \"job\": \"Novo Servico por PUT\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "https://reqres.in/api/users/3",
-							"protocol": "https",
-							"host": [
-								"reqres",
-								"in"
-							],
-							"path": [
-								"api",
-								"users",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "CREATE Copy",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const response = pm.response.json()\r",
-									"pm.test(\"Status code is 200 - Usuário alterado com sucesso!\", () => {\r",
-									"    pm.response.to.have.status(200)\r",
-									"})\r",
-									"\r",
-									"const schemaCode = {\r",
-									"    \"type\": \"object\",\r",
-									"    \"properties\": {\r",
-									"        \"name\": {\"type\": \"string\"},\r",
-									"        \"job\": {\"type\": \"string\"},\r",
-									"        \"updatedAt\": {\"type\": \"string\"},\r",
-									"    },\r",
-									"    \"required\": [\"name\", \"job\", \"updatedAt\"]\r",
-									"}\r",
-									"\r",
-									"pm.test('Schema está correto contendo todos os campos obrigatórios', () => {\r",
-									"    pm.response.to.have.jsonSchema(schemaCode)\r",
-									"})\r",
-									"\r",
-									"pm.test(\"Validando nome\", () => {\r",
-									"    pm.expect(response.name).to.eql(\"Teste Alterado\")\r",
-									"})\r",
-									"\r",
-									"pm.test(\"Validando trabalho\", () => {\r",
-									"    pm.expect(response.job).to.eql(\"Novo Servico por PATCH\")\r",
-									"})\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Teste Alterado\",\r\n    \"job\": \"Novo Servico por PATCH\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "https://reqres.in/api/users/3",
-							"protocol": "https",
-							"host": [
-								"reqres",
-								"in"
-							],
-							"path": [
-								"api",
-								"users",
-								"3"
 							]
 						}
 					},
@@ -744,6 +606,155 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "CREATE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.test(\"Status code is 200 - Usuário alterado com sucesso!\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"const schemaCode = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"name\": {\"type\": \"string\"},\r",
+									"        \"job\": {\"type\": \"string\"},\r",
+									"        \"updatedAt\": {\"type\": \"string\"},\r",
+									"    },\r",
+									"    \"required\": [\"name\", \"job\", \"updatedAt\"]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema está correto contendo todos os campos obrigatórios', () => {\r",
+									"    pm.response.to.have.jsonSchema(schemaCode)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando nome\", () => {\r",
+									"    pm.expect(response.name).to.eql(\"Teste Alterado\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando trabalho\", () => {\r",
+									"    pm.expect(response.job).to.eql(\"Novo Servico por PUT\")\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Teste Alterado\",\r\n    \"job\": \"Novo Servico por PUT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/users/3",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PATCH",
+			"item": [
+				{
+					"name": "UPDATE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.test(\"Status code is 200 - Usuário alterado com sucesso!\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"const schemaCode = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"name\": {\"type\": \"string\"},\r",
+									"        \"job\": {\"type\": \"string\"},\r",
+									"        \"updatedAt\": {\"type\": \"number\"},\r",
+									"        \"teste\": {\"type\": \"string\"}\r",
+									"    },\r",
+									"    \"required\": [\"name\", \"job\", \"updatedAt\"]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema está correto contendo todos os campos obrigatórios', () => {\r",
+									"    pm.response.to.have.jsonSchema(schemaCode)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando nome\", () => {\r",
+									"    pm.expect(response.name).to.eql(\"morpheus\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Validando trabalho\", () => {\r",
+									"    pm.expect(response.job).to.eql(\"zion resident\")\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\",\r\n    \"teste\": \"teste\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/users/2",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": []
 		}
 	]
 }
